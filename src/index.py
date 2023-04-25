@@ -78,10 +78,10 @@ def log(ctx) -> None:
     """
     # ctx : [(https://.../, status_code, A Web Page, <body>...</body>), ...]
 
-    with open('src/log/log.json','r',encoding='utf-8') as log_:
+    with open(os.path.join(__location__,'log/log.json'),'r',encoding='utf-8') as log_:
         log_ = json.loads(log_.read())
 
-    with open('src/log/sum_log.txt','r',encoding='utf-8') as log_2:
+    with open(os.path.join(__location__,'log/sum_log.txt'),'r',encoding='utf-8') as log_2:
         log_2 = log_2.read()
 
     log_2_out = f'{int(time())} changes:\n\n'
@@ -96,7 +96,7 @@ def log(ctx) -> None:
                 log_[i[0]]["title"][i[2]] = [int(time())]
 
             # Log page content
-            for file in os.scandir('src/archive/'):
+            for file in os.scandir(os.path.join(__location__,'archive/')):
                 with open(file.path,'r') as check:
                     check = check.read()
 
@@ -105,13 +105,13 @@ def log(ctx) -> None:
                     break
             else:
                 try:
-                    new_id = max(int(x.path.split('/')[-1][7:-4]) for x in os.scandir('src/archive')) + 1
+                    new_id = max(int(x.path.split('/')[-1][7:-4]) for x in os.scandir(os.path.join(__location__,'archive'))) + 1
                 except:
                     new_id = 0
 
                 log_2_out += f'New archive file created! src/archive/archive{new_id}.txt. This might mean that the urls linking here were updated?\n'
 
-                with open(f'src/archive/archive{new_id}.txt','w',encoding='utf-8') as c_new:
+                with open(os.path.join(__location__,f'archive/archive{new_id}.txt'),'w',encoding='utf-8') as c_new:
                     c_new.write(str(i[3]))
 
                 log_[i[0]]["content"][str(int(time()))] = f'src/archive/archive{new_id}.txt'
@@ -126,7 +126,7 @@ def log(ctx) -> None:
                 "title": {i[2]: [int(time())]},
                 "code": {str(int(time())): i[1]}}
 
-            for file in os.scandir('src/archive/'):
+            for file in os.scandir(os.path.join(__location__,'archive/')):
                 with open(file.path,'r') as check:
                     check = check.read()
 
@@ -135,23 +135,23 @@ def log(ctx) -> None:
                     break
             else:
                 try:
-                    new_id = max(int(x.path.split('/')[-1][7:-4]) for x in os.scandir('src/archive')) + 1
+                    new_id = max(int(x.path.split('/')[-1][7:-4]) for x in os.scandir(os.path.join(__location__,'archive'))) + 1
                 except:
                     new_id = 0
 
                 log_2_out += f'New archive file created! src/archive/archive{new_id}.txt. This might mean that the urls linking here were updated?\n'
 
-                with open(f'src/archive/archive{new_id}.txt','w',encoding='utf-8') as c_new:
+                with open(os.path.join(__location__,f'archive/archive{new_id}.txt'),'w',encoding='utf-8') as c_new:
                     c_new.write(str(i[3]))
 
                 log_[i[0]]["content"] = {
                     str(int(time())): f'src/archive/archive{new_id}.txt'
                     }
 
-    with open('src/log/log.json','w',encoding='utf-8') as n_log:
+    with open(os.path.join(__location__,'log/log.json'),'w',encoding='utf-8') as n_log:
         n_log.write(json.dumps(log_, indent=2))
 
-    with open('src/log/sum_log.txt','w',encoding='utf-8') as sum_log:
+    with open(os.path.join(__location__,'log/sum_log.txt'),'w',encoding='utf-8') as sum_log:
         sum_log.write(log_2 + log_2_out + '\nEnd logging.\n')
 
 
@@ -161,8 +161,11 @@ def main() -> None:
     """
 
     print('Executing hourly index.')
+    global __location__
+    __location__ = os.path.realpath(
+    os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
-    with open('src/domains.txt','r',encoding='utf-8') as domains:
+    with open(os.path.join(__location__,'domains.txt'),'r',encoding='utf-8') as domains:
         domains = [x.split('\n')[0] for x in domains.readlines()]
 
     time_ = perf_counter()
