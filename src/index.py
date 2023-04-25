@@ -176,7 +176,7 @@ def runner():
     """
 
     while 1:
-        sleep(3600 - (time.time() % 3600))
+        sleep(3600 - (time() % 3600))
         main()
 
 runner()
