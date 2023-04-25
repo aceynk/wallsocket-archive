@@ -111,7 +111,7 @@ def log(ctx) -> None:
                 except:
                     new_id = 0
 
-                log_2_out += f'{ctx[0]}: New archive file created! src/archive/archive{new_id}.txt. This might mean that the urls linking here were updated?\n'
+                log_2_out += f'{i[0]}: New archive file created! src/archive/archive{new_id}.txt. This might mean that the urls linking here were updated?\n'
 
                 with open(os.path.join(__location__,f'archive/archive{new_id}.txt'),'w',encoding='utf-8') as c_new:
                     c_new.write(str(i[3]))
@@ -141,7 +141,7 @@ def log(ctx) -> None:
                 except:
                     new_id = 0
 
-                log_2_out += f'{ctx[0]}: New archive file created! src/archive/archive{new_id}.txt. This might mean that the urls linking here were updated?\n'
+                log_2_out += f'{i[0]}: New archive file created! src/archive/archive{new_id}.txt. This might mean that the urls linking here were updated?\n'
 
                 with open(os.path.join(__location__,f'archive/archive{new_id}.txt'),'w',encoding='utf-8') as c_new:
                     c_new.write(str(i[3]))
