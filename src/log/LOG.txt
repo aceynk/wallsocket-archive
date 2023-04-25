@@ -1,0 +1,4 @@
+If log.json is a pair of empty braces, keep it as such. If it is completely empty, 
+add a set of empty braces, like '{}'.
+
+sum_log.txt exists to give a more readable, human log to changes made in indexing.
